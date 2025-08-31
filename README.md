@@ -82,6 +82,8 @@ Each folder contains:
 
 ## 🖥️ Example
 
+### Example 1:
+
 **Input Program:**
 ```c
 fn int my_fn(int x, float y) {
@@ -100,6 +102,23 @@ fn int my_fn(int x, float y) {
  T_IDENTIFIER("x"), T_EQUALSOP, T_INTLIT(40), T_SEMICOLON, 
  T_RETURN, T_IDENTIFIER("x"), T_SEMICOLON, T_BRACER]
 ```
+
+### Example 2:
+
+**Input Program:**
+```c
+string var1 = "i am  lexer 💕🙌";
+int 123var = 5;
+```
+
+**Output Token Stream:**
+```
+T_IDENTIFIER("string"), T_IDENTIFIER("var1"), T_ASSIGNOP("="), T_STRINGLIT(""i am  lexer 💕🙌""),
+T_SEMICOLON(";"), T_INT("int"), ERROR: Invalid identifier: 123var at line 3, column 5
+T_ASSIGNOP("="), T_INTLIT("5"), T_SEMICOLON(";"), 
+```
+
+
 
 ---
 
