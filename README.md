@@ -16,6 +16,8 @@ Every group member works on their own folder within a dedicated branch (`lexer`)
 ├── ahmad-78/
 ├── arshad-69/
 └── bazil-72/
+└── screenshots/
+
 ```
 
 Each folder contains:
@@ -86,22 +88,45 @@ Each folder contains:
 
 **Input Program:**
 ```c
-fn int my_fn(int x, float y) {
-    string my_str = "hmm";
-    bool my_bool = x == 40;
-    return x;
-}
+    #include <stdio.h>
+    #define MAX 100
+    int main() { 
+        // this is a comment
+        int x = 42;
+        float y = 3.14159f;
+        char c = '\n';
+        char* str = "Hello\tWorld! \"quoted\"";
+        
+        /* Multi-line
+           comment */
+        
+        if (x > 0 && x <= MAX) {
+            printf("Value: %d\n", x);
+        } else if (x == 0 || x >= MAX) {
+            printf("Boundary value\n");
+        }
+        
+        for (int i = 0; i < 10; i++) {
+            x += i;
+            x++;
+            x--;
+        }
+        
+        while (x > 0) {
+            x >>= 1;  // Right shift
+            x &= 0xFF; // Bitwise AND
+        }
+        return 0;
+    }
 ```
 
 **Output Token Stream:**
 ```
-[T_FUNCTION, T_INT, T_IDENTIFIER("my_fn"), T_PARENL, T_INT, T_IDENTIFIER("x"),
- T_COMMA, T_FLOAT, T_IDENTIFIER("y"), T_PARENR, T_BRACEL,
- T_STRING, T_IDENTIFIER("my_str"), T_ASSIGNOP, T_QUOTES, T_STRINGLIT("hmm"), 
- T_QUOTES, T_SEMICOLON, T_BOOL, T_IDENTIFIER("my_bool"), T_ASSIGNOP, 
- T_IDENTIFIER("x"), T_EQUALSOP, T_INTLIT(40), T_SEMICOLON, 
- T_RETURN, T_IDENTIFIER("x"), T_SEMICOLON, T_BRACER]
+T_INCLUDE("#include"), T_LT("<"), T_IDENTIFIER("stdio"), T_DOT("."), T_IDENTIFIER("h"), T_GT(">"), T_DEFINE("#define"), T_IDENTIFIER("MAX"), T_INTLIT("100"), T_INT("int"), T_IDENTIFIER("main"), T_LPAREN("("), T_RPAREN(")"), T_LBRACE("{"), T_SINGLE_COMMENT("// this is a comment"), T_INT("int"), T_IDENTIFIER("x"), T_ASSIGNOP("="), T_INTLIT("42"), T_SEMICOLON(";"), T_FLOAT("float"), T_IDENTIFIER("y"), T_ASSIGNOP("="), T_FLOATLIT("3.14159"), T_IDENTIFIER("f"), T_SEMICOLON(";"), T_CHAR("char"), T_IDENTIFIER("c"), T_ASSIGNOP("="), T_CHARLIT("'\n'"), T_SEMICOLON(";"), T_CHAR("char"), T_MULTIPLY("*"), T_IDENTIFIER("str"), T_ASSIGNOP("="), T_STRINGLIT(""Hello\tWorld! \"quoted\"""), T_SEMICOLON(";"), T_MULTI_COMMENT("/* Multi-line comment */"), T_IF("if"), T_LPAREN("("), T_IDENTIFIER("x"), T_GT(">"), T_INTLIT("0"), T_AND("&&"), T_IDENTIFIER("x"), T_LE("<="), T_IDENTIFIER("MAX"), T_RPAREN(")"), T_LBRACE("{"), T_IDENTIFIER("printf"), T_LPAREN("("), T_STRINGLIT(""Value: %d\n""), T_COMMA(","), T_IDENTIFIER("x"), T_RPAREN(")"), T_SEMICOLON(";"), T_RBRACE("}"), T_ELSE("else"), T_IF("if"), T_LPAREN("("), T_IDENTIFIER("x"), T_EQUALOP("=="), T_INTLIT("0"), T_OR("||"), T_IDENTIFIER("x"), T_GE(">="), T_IDENTIFIER("MAX"), T_RPAREN(")"), T_LBRACE("{"), T_IDENTIFIER("printf"), T_LPAREN("("), T_STRINGLIT(""Boundary value\n""), T_RPAREN(")"), T_SEMICOLON(";"), T_RBRACE("}"), T_FOR("for"), T_LPAREN("("), T_INT("int"), T_IDENTIFIER("i"), T_ASSIGNOP("="), T_INTLIT("0"), T_SEMICOLON(";"), T_IDENTIFIER("i"), T_LT("<"), T_INTLIT("10"), T_SEMICOLON(";"), T_IDENTIFIER("i"), T_INCREMENT("++"), T_RPAREN(")"), T_LBRACE("{"), T_IDENTIFIER("x"), T_PLUS("+"), T_ASSIGNOP("="), T_IDENTIFIER("i"), T_SEMICOLON(";"), T_IDENTIFIER("x"), T_INCREMENT("++"), T_SEMICOLON(";"), T_IDENTIFIER("x"), T_DECREMENT("--"), T_SEMICOLON(";"), T_RBRACE("}"), T_WHILE("while"), T_LPAREN("("), T_IDENTIFIER("x"), T_GT(">"), T_INTLIT("0"), T_RPAREN(")"), T_LBRACE("{"), T_IDENTIFIER("x"), T_RIGHT_SHIFT(">>"), T_ASSIGNOP("="), T_INTLIT("1"), T_SEMICOLON(";"), T_SINGLE_COMMENT("// Right shift"), T_IDENTIFIER("x"), T_BITWISE_AND("&"), T_ASSIGNOP("="), ERROR: Invalid identifier: 0xFF at line 28, column 18
+T_SEMICOLON(";"), T_SINGLE_COMMENT("// Bitwise AND"), T_RBRACE("}"), T_RETURN("return"), T_INTLIT("0"), T_SEMICOLON(";"), T_RBRACE("}"),
 ```
+
+---
 
 ### Example 2:
 
