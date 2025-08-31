@@ -164,8 +164,8 @@ T_ASSIGNOP("="), T_INTLIT("5"), T_SEMICOLON(";"),
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-org-or-username>/toy-compiler.git
-   cd toy-compiler
+   git clone https://github.com/BazilSuhail/Custom-Compiler
+   cd Custom-Compiler
    ```
 
 2. Switch to the `lexer` branch:
@@ -177,7 +177,7 @@ T_ASSIGNOP("="), T_INTLIT("5"), T_SEMICOLON(";"),
 
 4. Run the lexer (example in Python):
    ```bash
-   g++ lexer.cpp -o lexer
+   g++ manual_lexer.cpp -o lexer
    ```
 
 5. Check the generated **token stream** in console output.
@@ -194,24 +194,14 @@ T_ASSIGNOP("="), T_INTLIT("5"), T_SEMICOLON(";"),
 ## 🏆 Bonus Features
 
 - Unicode and emoji support in identifiers and strings  
-- Extensive error reporting with descriptive messages  
-- Modular structure allowing integration with **future phases**: parsing, semantic analysis, and code generation  
+- Extensive error reporting with descriptive messages
 
 ---
 
 ## 🔗 Submission Format
 
 - Each group member’s code resides in their folder.  
-- Screenshots of **input program** and **output token stream** are included.   
----
-
-## 📌 Future Work
-
-This repository will be extended into a **full mini-compiler project**, with upcoming branches covering:
-- Parser (syntax analysis)  
-- Semantic analyzer  
-- Optimization and final code generation  
-
+- Screenshots of **input program** and **output token stream** are included in the **screenshots** folder.   
 ---
 
 **Maintained by Group Members (Abdullah-54, Ahmad-78, Arshad-69, Bazil-72)**  
