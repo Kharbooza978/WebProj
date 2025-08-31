@@ -1,120 +1,174 @@
-# Airbnb Clone
+# Custom Compiler – Lexical Analyzer Project
 
-This project is a clone of Airbnb, built using React and Vite. It provides a platform for users to book vacation rentals, cabins, beach houses, and more. The application includes features for both guests and hosts, allowing users to sign up, sign in, view listings, book stays, and manage their bookings.
+This repository contains the implementation of a **Lexical Analyzer** (Lexer/Tokenizer) as part of our Compiler Construction course project.  
+The lexer is the first phase of a compiler and is responsible for scanning the source code, identifying lexemes, and producing a stream of tokens for further compilation stages.
 
-## Table of Contents
+---
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
+## 📂 Repository Structure
 
-#### Features
+The project is structured by **group member folders < firstName - RollNumber >**, each containing individual implementations.  
+Every group member works on their own folder within a dedicated branch (`lexer`), maintaining personal contributions and experimentation.
 
-- **User Authentication**: Sign up and sign in functionality for guests and hosts.
-- **Listings**: View all available listings, search by title or category, and view - detailed information about each listing.
-- **Booking**: Book stays, view your bookings, and manage bookings as a host.
-- **Host Dashboard**: Manage your listings, add new listings, and edit or delete existing listings.
-- **Responsive Design**: Optimized for both desktop and mobile devices.
+```
+.
+├── abdullah-54/
+├── ahmad-78/
+├── arshad-69/
+└── bazil-72/
+```
 
-#### Installation
+Each folder contains:
+- **`regex_lexer.cpp`** → Lexer implemented using **Regular Expressions**  
+- **`manual_lexer.cpp`** → Lexer implemented using **raw string comparisons and state machines** (no regex, no third-party libraries)   
 
-To get started with this project, follow these steps:
+---
+
+## ✨ Features of the Lexer
+
+1. **Tokenization of Core Constructs**
+
+   * **Keywords**: `int`, `float`, `double`, `char`, `void`, `bool`, `if`, `else`, `while`, `for`, `return`, `break`, `continue`, `switch`, `case`, `default`, `do`, `const`, `static`, `signed`, `unsigned`, `short`, `long`, `enum`, `typedef`
+   * **Identifiers**: User-defined names; validated to **not start with digits**
+   * **Operators**:
+
+     * Arithmetic: `+ - * / %`
+     * Increment/Decrement: `++ --`
+     * Relational: `== != <= >= < >`
+     * Logical: `&& || !`
+     * Bitwise: `& | ^ ~ << >>`
+     * Assignment: `= += -=`
+   * **Delimiters / Brackets**: `, ; ( ) { } [ ] .`
+
+2. **String and Character Literals**
+
+   * Handles `"..."` strings and `'...'` character literals
+   * Supports **escape sequences** like `\n`, `\t`, `\\`, `\"`, etc.
+   * Unterminated strings or char literals are flagged as **errors**
+
+3. **Preprocessor Directives**
+
+   * Recognizes `#include` and `#define`
+
+4. **Number Literals**
+
+   * **Integers** and **floating-point numbers**
+   * Supports scientific notation (`1.23e+4`)
+   * Detects invalid identifiers that start with a digit
+
+5. **Error Handling**
+
+   * Invalid identifiers (e.g., starting with numbers)
+   * Unknown characters
+   * Unterminated strings and char literals
+
+6. **Output**
+
+   * Produces a **token stream** with token type, value, and source position:
+
+     ```
+     [T_INT, T_IDENTIFIER("myVar"), T_ASSIGNOP("="), T_INTLIT("5"), T_SEMICOLON, ...]
+     ```
+
+7. **Comment Handling**
+
+   * Skips single-line (`//`) and multi-line (`/* ... */`) comments
+
+8. **Lexer State Tracking**
+
+   * Tracks **line and column** for each token
+   * Maintains a **keyword table** for quick lookup
+---
+
+## 🖥️ Example
+
+**Input Program:**
+```c
+fn int my_fn(int x, float y) {
+    string my_str = "hmm";
+    bool my_bool = x == 40;
+    return x;
+}
+```
+
+**Output Token Stream:**
+```
+[T_FUNCTION, T_INT, T_IDENTIFIER("my_fn"), T_PARENL, T_INT, T_IDENTIFIER("x"),
+ T_COMMA, T_FLOAT, T_IDENTIFIER("y"), T_PARENR, T_BRACEL,
+ T_STRING, T_IDENTIFIER("my_str"), T_ASSIGNOP, T_QUOTES, T_STRINGLIT("hmm"), 
+ T_QUOTES, T_SEMICOLON, T_BOOL, T_IDENTIFIER("my_bool"), T_ASSIGNOP, 
+ T_IDENTIFIER("x"), T_EQUALSOP, T_INTLIT(40), T_SEMICOLON, 
+ T_RETURN, T_IDENTIFIER("x"), T_SEMICOLON, T_BRACER]
+```
+
+---
+
+## 👥 Group Members
+
+| Name      | Roll No | Folder       |
+|-----------|---------|--------------|
+| Abdullah  | 54      | `abdullah-54/` |
+| Ahmad     | 78      | `ahmad-78/`   |
+| Arshad    | 69      | `arshad-69/`  |
+| Bazil     | 72      | `bazil-72/`   |
+
+> Each member maintains their implementation inside their respective folder and branch.
+
+---
+
+## 🚀 How to Run
 
 1. Clone the repository:
+   ```bash
+   git clone https://github.com/<your-org-or-username>/toy-compiler.git
+   cd toy-compiler
+   ```
 
-```bash
-git clone https://github.com/Abdullah-Masood-5/webproject.git
-cd airbnb-clone
-```
+2. Switch to the `lexer` branch:
+   ```bash
+   git checkout lexer
+   ```
 
-2. Install dependencies:
+3. Navigate to a member’s folder, then into either `regex_lexer` or `manual_lexer`.
 
-```bash
-npm install
-```
+4. Run the lexer (example in Python):
+   ```bash
+   g++ lexer.cpp -o lexer
+   ```
 
-3. Start the development server:
+5. Check the generated **token stream** in console output.
+---
 
-```bash
-npm run dev
-```
+## 📖 Notes
 
-Build for production:
+- The **regex-based lexer** offers concise implementation, leveraging pattern-matching for fast tokenization.  
+- The **manual lexer** provides deeper insight into how compilers handle lexical analysis via **finite state machines** and string scanning.  
+- Both approaches are maintained for academic completeness.
 
-```bash
-npm run build
-```
+---
 
-Preview the production build:
+## 🏆 Bonus Features
 
-```bash
-npm run preview
-```
+- Unicode and emoji support in identifiers and strings  
+- Extensive error reporting with descriptive messages  
+- Modular structure allowing integration with **future phases**: parsing, semantic analysis, and code generation  
 
-#### Usage
+---
 
-After starting the development server, open your browser and navigate to `http://localhost:3000` to view the application. You can sign up as a guest or host, view listings, book stays, and manage your bookings.
+## 🔗 Submission Format
 
-#### Project Structure
+- Each group member’s code resides in their folder.  
+- Screenshots of **input program** and **output token stream** are included.   
+---
 
-The project structure is as follows:
+## 📌 Future Work
 
-```plaintext
-.env
-.gitignore
-eslint.config.js
-index.html
-package.json
-public/
-README.md
-src/
-    App.jsx
-    index.css
-    main.jsx
-    assets/
-    Components/
-        BookingList.jsx
-        BookingPage.jsx
-        Footer.jsx
-        HomeListings.jsx
-        HorizontalScrollList.jsx
-        HostBookings.jsx
-        HostDashboard.jsx
-        ListingDetailsPage.jsx
-        Navbar.jsx
-        Profile.jsx
-        SearchListings.jsx
-        SignIn.jsx
-        SignUp.jsx
+This repository will be extended into a **full mini-compiler project**, with upcoming branches covering:
+- Parser (syntax analysis)  
+- Semantic analyzer  
+- Optimization and final code generation  
 
-    Styles/
-        BookingList.css
-        BookingPage.css
-        Footer.css
-        HomeListings.css
-        HorizontalScrollList.css
-        HostBookings.css
-        HostDashboard.css
-        ListingDetailsPage.css
-        Navbar.css
-        Profile.css
-        SearchListings.css
-        SignIn.css
-        SignUp.css
-        ...
-vite.config.js
-```
+---
 
-- **Components**: Contains all the React components used in the application.
-- **Styles**: Contains CSS files for styling the components.
-- **assets**: Contains static assets like images and icons.
-- **index.html**: The main HTML file.
-- **main.jsx**: The entry point of the React application.
-- **App.jsx**: The main application component that includes routing.
-
-### Contributing
-
-Contributions are welcome! If you have any suggestions or improvements, feel free to open an issue or submit a pull request.
+**Maintained by Group Members (Abdullah-54, Ahmad-78, Arshad-69, Bazil-72)**  
+Compiler Construction Course – 2025
